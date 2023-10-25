@@ -1,24 +1,28 @@
 package com.example.pokemonapp.ui.pokemonlist.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 import com.example.pokemonapp.R
+import com.example.pokemonapp.data.basicDiffUtil
+import com.example.pokemonapp.data.inflate
+import com.example.pokemonapp.data.remote.network.Response.Pokemon
 
 class PokemonListAdapter(private val onClick: (String) -> Unit) :
-    RecyclerView.Adapter<ViewHolder>() {
+    ListAdapter<Pokemon, ViewHolder>(basicDiffUtil { old, new -> old.name == new.name }) {
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int,
     ): ViewHolder {
-        LayoutInflater.from(parent.context).inflate(R.layout.item_pokemon, parent, false)
-    }
-
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        val view = parent.inflate(R.layout.item_pokemon, false)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(onClick)
+        val pokemonItem = getItem(position)
+        holder.bind(pokemonItem)
+        holder.itemView.setOnClickListener {
+            onClick(pokemonItem.name)
+        }
     }
 }
