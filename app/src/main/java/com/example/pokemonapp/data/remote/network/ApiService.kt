@@ -1,22 +1,18 @@
 package com.example.pokemonapp.data.remote.network
 
+import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
+import javax.inject.Inject
 
-class ApiService {
-    fun fetchDataFromApi(
-        isSearchPokemon: Boolean = false,
-        pokemonNameToSearch: String = "",
+class ApiService @Inject constructor() : IApiService {
+    override suspend fun fetchDataFromApi(
+        apiUrl: String,
     ): String {
-        val baseUrl = "https://pokeapi.co/api/v2/pokemon/"
-
-        val apiUrl = if (isSearchPokemon) {
-            "$baseUrl$pokemonNameToSearch/"
-        } else {
-            baseUrl
-        }
         val url = URL(apiUrl)
         val connection = url.openConnection() as HttpURLConnection
 
@@ -27,16 +23,19 @@ class ApiService {
             connection.connectTimeout = 5000
             connection.readTimeout = 5000
 
-            val reader = BufferedReader(InputStreamReader(connection.inputStream))
-            var line: String?
-            while (reader.readLine().also { line = it } != null) {
-                response.append(line)
+            withContext(Dispatchers.IO) {
+                val reader = BufferedReader(InputStreamReader(connection.inputStream))
+                var line: String?
+                while (reader.readLine().also { line = it } != null) {
+                    response.append(line)
+                }
+                reader.close()
             }
-            reader.close()
         } finally {
             connection.disconnect()
         }
 
+        Log.d("RESPONSE ----->", response.toString())
         return response.toString()
     }
 }

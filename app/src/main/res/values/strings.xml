@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PokemonApp</string>
+    <string name="search_pokemon">Search pokemon</string>
+    <string name="available_pokemon">Available pokemons</string>
 </resources>

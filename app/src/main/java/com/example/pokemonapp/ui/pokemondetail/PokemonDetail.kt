@@ -1,22 +1,20 @@
 package com.example.pokemonapp.ui.pokemondetail
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.pokemonapp.R
+import com.example.pokemonapp.databinding.PokemonDetailFragmentBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-class PokemonDetail : Fragment() {
+@AndroidEntryPoint
+class PokemonDetail : Fragment(R.layout.pokemon_detail_fragment) {
 
-    private val viewModel: PokemonDetailViewModel by viewModels()
+    private val viewModel: DetailViewModel by viewModels()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        return inflater.inflate(R.layout.pokemon_detail_fragment, container, false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val binding = PokemonDetailFragmentBinding.bind(view).apply { }
     }
 }

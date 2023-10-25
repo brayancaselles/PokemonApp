@@ -3,13 +3,33 @@ package com.example.pokemonapp.data.repository
 import com.example.pokemonapp.data.datasource.ILocalDataSource
 import com.example.pokemonapp.data.datasource.IRemoteDataSource
 import com.example.pokemonapp.data.remote.network.Response.Pokemon
-import com.example.pokemonapp.domain.IRepository
+import javax.inject.Inject
 
-class Repository(
+class Repository @Inject constructor(
     private val remoteDataSource: IRemoteDataSource,
     private val localDataSource: ILocalDataSource,
-) : IRepository {
-    override suspend fun getPokemonListFromApi(): List<Pokemon>? {
-        return remoteDataSource.getPokemonListFromApi()?.results
+) {
+
+    val pokemonList get() = localDataSource.pokemonList
+
+    suspend fun getPokemonListFromApi(): List<Pokemon>? {
+        return if (localDataSource.isEmpty()) {
+            val pokemonList: ArrayList<Pokemon> = ArrayList()
+            val result = remoteDataSource.getPokemonListFromApi()
+
+            if (result != null) {
+                for (i in 0 until result.length()) {
+                    val jsonObject = result.getJSONObject(i)
+                    val pokemon = Pokemon(
+                        name = jsonObject.getString("name"),
+                        url = jsonObject.getString("url"),
+                    )
+                    pokemonList.add(pokemon)
+                }
+            }
+            pokemonList.sortedBy { it.name }
+        } else {
+            null
+        }
     }
 }

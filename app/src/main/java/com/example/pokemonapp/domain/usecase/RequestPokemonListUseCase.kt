@@ -1,11 +1,12 @@
 package com.example.pokemonapp.domain.usecase
 
 import com.example.pokemonapp.data.remote.network.Response.Pokemon
-import com.example.pokemonapp.domain.IRepository
+import com.example.pokemonapp.data.repository.Repository
+import javax.inject.Inject
 
-class RequestPokemonListUseCase(private val repository: IRepository) : IGetPokemonListUseCase {
+class RequestPokemonListUseCase @Inject constructor(private val repository: Repository) {
 
-    override suspend operator fun invoke(): List<Pokemon>? {
+    suspend operator fun invoke(): List<Pokemon>? {
         return repository.getPokemonListFromApi()
     }
 }

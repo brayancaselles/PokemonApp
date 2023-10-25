@@ -7,7 +7,7 @@ import com.example.pokemonapp.data.basicDiffUtil
 import com.example.pokemonapp.data.inflate
 import com.example.pokemonapp.data.remote.network.Response.Pokemon
 
-class PokemonListAdapter(private val onClick: (String) -> Unit) :
+class PokemonListAdapter(private val onClick: (Pokemon) -> Unit) :
     ListAdapter<Pokemon, ViewHolder>(basicDiffUtil { old, new -> old.name == new.name }) {
 
     override fun onCreateViewHolder(
@@ -21,8 +21,6 @@ class PokemonListAdapter(private val onClick: (String) -> Unit) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val pokemonItem = getItem(position)
         holder.bind(pokemonItem)
-        holder.itemView.setOnClickListener {
-            onClick(pokemonItem.name)
-        }
+        holder.itemView.setOnClickListener { onClick(pokemonItem) }
     }
 }

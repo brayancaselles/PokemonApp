@@ -10,10 +10,13 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.DiffUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 inline fun <T : Any> basicDiffUtil(
     crossinline areItemsTheSame: (T, T) -> Boolean = { old, new -> old == new },
@@ -46,4 +49,18 @@ fun <T> LifecycleOwner.launchAndCollect(
             flow.collect(body)
         }
     }
+}
+
+fun View.setVisibleOrGone(visible: Boolean) {
+    visibility = if (visible) View.VISIBLE else View.INVISIBLE
+}
+
+fun <R> CoroutineScope.executeAsyncTask(
+    doInBackground: () -> R,
+    onPostExecute: (R) -> Unit,
+) = launch {
+    val result = withContext(Dispatchers.IO) {
+        doInBackground()
+    }
+    onPostExecute(result)
 }

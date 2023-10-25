@@ -1,21 +1,21 @@
 package com.example.pokemonapp.data.remote
 
 import com.example.pokemonapp.data.datasource.IRemoteDataSource
-import com.example.pokemonapp.data.remote.network.ApiService
-import com.example.pokemonapp.data.remote.network.Response.PokemonListModel
+import com.example.pokemonapp.data.remote.network.IApiService
 import org.json.JSONArray
+import org.json.JSONObject
+import javax.inject.Inject
 
-class RemoteDataSource(private val apiService: ApiService) : IRemoteDataSource {
+class RemoteDataSource @Inject constructor(private val apiService: IApiService) :
+    IRemoteDataSource {
 
-    override suspend fun getPokemonListFromApi(): PokemonListModel? {
+    override suspend fun getPokemonListFromApi(): JSONArray? {
         val apiResponseJson = apiService.fetchDataFromApi()
 
         try {
-            val jsonArray = JSONArray(apiResponseJson)
-            if (jsonArray.length() > 0) {
-                val jsonObject = jsonArray.getJSONObject(0)
-                return PokemonListModel(jsonObject)
-            }
+            val jsonObject = JSONObject(apiResponseJson)
+
+            return jsonObject.getJSONArray("pokemon_species")
         } catch (e: Exception) {
             e.printStackTrace()
         }
