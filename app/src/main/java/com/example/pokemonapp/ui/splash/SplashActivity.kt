@@ -3,8 +3,9 @@ package com.example.pokemonapp.ui.splash
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.pokemonapp.databinding.ActivitySplashBinding
 import com.example.pokemonapp.ui.NavGraphActivity
 import dagger.hilt.android.AndroidEntryPoint
@@ -13,19 +14,14 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SplashActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySplashBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        val screenSplash = installSplashScreen()
         super.onCreate(savedInstanceState)
-        binding = ActivitySplashBinding.inflate(layoutInflater)
+        val binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        screenSplash.setKeepOnScreenCondition { true }
-        goToMainActivity()
-    }
 
-    private fun goToMainActivity() {
-        startActivity(Intent(this, NavGraphActivity::class.java))
-        finish()
+        Handler(Looper.getMainLooper()).postDelayed({
+            startActivity(Intent(this, NavGraphActivity::class.java))
+            finish()
+        }, 2000)
     }
 }

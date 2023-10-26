@@ -27,7 +27,10 @@ class PokemonList : Fragment(R.layout.pokemon_list_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val binding = PokemonListFragmentBinding.bind(view)
-            .apply { recyclerViewPokemonList.adapter = adapter }
+            .apply {
+                containerToolbar.iconBack.visibility = View.GONE
+                recyclerViewPokemonList.adapter = adapter
+            }
         launchGetPokemonList(binding)
     }
 

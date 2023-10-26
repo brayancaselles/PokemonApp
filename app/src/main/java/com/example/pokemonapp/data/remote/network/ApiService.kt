@@ -1,15 +1,21 @@
 package com.example.pokemonapp.data.remote.network
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
+import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.HttpURLConnection
 import java.net.URL
 import javax.inject.Inject
 
 class ApiService @Inject constructor() : IApiService {
+
     override suspend fun fetchDataFromApi(
         apiUrl: String,
     ): String {
@@ -39,7 +45,48 @@ class ApiService @Inject constructor() : IApiService {
             connection.disconnect()
         }
 
-        Log.d("RESPONSE ----->", response.toString())
         return response.toString()
+    }
+
+    /*override suspend fun downloadImage(imageUrl: String): Bitmap? {
+        var bitmap: Bitmap? = null
+        withContext(Dispatchers.IO) {
+            try {
+                val url = URL(imageUrl)
+                val connection = url.openConnection() as HttpURLConnection
+                connection.doInput = true
+                connection.connect()
+                val input: InputStream = connection.inputStream
+                bitmap = BitmapFactory.decodeStream(input)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        Log.d("RESPONSE -----> IMAGE", "bitmap -> $bitmap")
+        return bitmap
+    }*/
+
+    override suspend fun downloadImagesParallelFromApi(imageUrls: List<String>): List<Bitmap?> {
+        return withContext(Dispatchers.IO) {
+            val deferredBitmaps = imageUrls.map { imageUrl ->
+                async {
+                    try {
+                        val url = URL(imageUrl)
+                        val connection = url.openConnection() as HttpURLConnection
+                        connection.doInput = true
+                        connection.connect()
+                        val input: InputStream = connection.inputStream
+                        BitmapFactory.decodeStream(input)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                        null
+                    }
+                }
+            }
+
+            Log.d("tag", "bitmap -> $deferredBitmaps")
+
+            deferredBitmaps.awaitAll()
+        }
     }
 }

@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 
 inline fun <T : Any> basicDiffUtil(
     crossinline areItemsTheSame: (T, T) -> Boolean = { old, new -> old == new },
@@ -51,3 +52,6 @@ fun <T> LifecycleOwner.launchAndCollect(
 fun View.setVisibleOrGone(visible: Boolean) {
     visibility = if (visible) View.VISIBLE else View.INVISIBLE
 }
+
+fun JSONObject.ifContainsKeyReturnString(key: String) =
+    if (this.has(key)) this.getString(key) ?: "" else ""

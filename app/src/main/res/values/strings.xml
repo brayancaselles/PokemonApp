@@ -2,4 +2,8 @@
     <string name="app_name">PokemonApp</string>
     <string name="search_pokemon">Search pokemon</string>
     <string name="available_pokemon">Available pokemons</string>
+    <string name="types_pokemon">Types</string>
+    <string name="abilities_pokemon">Abilities</string>
+    <string name="moves_pokemon">Moves</string>
+    <string name="stats_pokemon">Stats</string>
 </resources>

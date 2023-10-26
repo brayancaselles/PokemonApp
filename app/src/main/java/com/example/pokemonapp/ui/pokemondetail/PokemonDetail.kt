@@ -1,10 +1,12 @@
 package com.example.pokemonapp.ui.pokemondetail
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.pokemonapp.R
 import com.example.pokemonapp.data.diff
 import com.example.pokemonapp.data.setVisibleOrGone
@@ -20,7 +22,11 @@ class PokemonDetail : Fragment(R.layout.pokemon_detail_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = PokemonDetailFragmentBinding.bind(view).apply { }
+        val binding = PokemonDetailFragmentBinding.bind(view).apply {
+            containerToolbar.iconBack.setOnClickListener {
+                findNavController().popBackStack()
+            }
+        }
         launchGetDetailPokemon(binding)
     }
 
@@ -28,12 +34,8 @@ class PokemonDetail : Fragment(R.layout.pokemon_detail_fragment) {
         lifecycleScope.launch(Dispatchers.IO) {
             with(viewModel.state) {
                 diff(this, { it.isLoading }) { binding.progressLoading.setVisibleOrGone(it) }
-                diff(
-                    this,
-                    {
-                        it.detailPokemon
-                    },
-                ) { pokemonDetail ->
+                diff(this, { it.detailPokemon }) { pokemonDetail ->
+                    Log.d("POKEMONDETAIL", "$pokemonDetail")
                 }
             }
         }

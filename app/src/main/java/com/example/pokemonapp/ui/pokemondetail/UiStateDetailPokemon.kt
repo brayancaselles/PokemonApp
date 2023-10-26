@@ -4,5 +4,5 @@ import com.example.pokemonapp.domain.model.PokemonDetailModel
 
 data class UiStateDetailPokemon(
     val isLoading: Boolean = false,
-    val detailPokemon: List<PokemonDetailModel>? = null,
+    val detailPokemon: PokemonDetailModel? = null,
 )
