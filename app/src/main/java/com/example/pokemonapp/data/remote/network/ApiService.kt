@@ -13,7 +13,11 @@ class ApiService @Inject constructor() : IApiService {
     override suspend fun fetchDataFromApi(
         apiUrl: String,
     ): String {
-        val url = URL(apiUrl)
+        val baseUrl = "https://pokeapi.co/api/v2/"
+
+        val createUrl = "$baseUrl$apiUrl"
+
+        val url = URL(createUrl)
         val connection = url.openConnection() as HttpURLConnection
 
         val response = StringBuilder()

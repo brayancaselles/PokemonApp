@@ -75,7 +75,7 @@
         android:layout_gravity="center"
         android:indeterminate="true"
         android:visibility="invisible"
-        app:indicatorColor="@android:color/holo_blue_light"
+        app:indicatorColor="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -1,11 +1,11 @@
 package com.example.pokemonapp.data.datasource
 
-import com.example.pokemonapp.data.remote.network.Response.Pokemon
+import com.example.pokemonapp.domain.model.PokemonModel
 import kotlinx.coroutines.flow.Flow
 
 interface ILocalDataSource {
 
-    val pokemonList: Flow<List<Pokemon>>
+    val pokemonList: Flow<List<PokemonModel>>
 
     suspend fun isEmpty(): Boolean
 }

@@ -9,9 +9,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.pokemonapp.R
 import com.example.pokemonapp.data.diff
-import com.example.pokemonapp.data.remote.network.Response.Pokemon
 import com.example.pokemonapp.data.setVisibleOrGone
 import com.example.pokemonapp.databinding.PokemonListFragmentBinding
+import com.example.pokemonapp.domain.model.PokemonModel
 import com.example.pokemonapp.ui.pokemonlist.adapter.PokemonListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -48,12 +48,15 @@ class PokemonList : Fragment(R.layout.pokemon_list_fragment) {
         }
     }
 
-    private fun onPokemonClick(pokemon: Pokemon) {
-        val action = PokemonListDirections.actionPokemonListToPokemonDetail(pokemon.url)
+    private fun onPokemonClick(pokemon: PokemonModel) {
+        val action = PokemonListDirections.actionPokemonListToPokemonDetail(pokemon.name)
         findNavController().navigate(action)
     }
 
-    private fun initTextFilter(binding: PokemonListFragmentBinding, pokemonList: List<Pokemon>?) {
+    private fun initTextFilter(
+        binding: PokemonListFragmentBinding,
+        pokemonList: List<PokemonModel>?,
+    ) {
         binding.textViewSearch.addTextChangedListener { text ->
 
             val filter = pokemonList?.filter { textFilter ->

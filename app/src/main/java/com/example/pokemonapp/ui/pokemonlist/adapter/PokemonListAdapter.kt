@@ -5,10 +5,10 @@ import androidx.recyclerview.widget.ListAdapter
 import com.example.pokemonapp.R
 import com.example.pokemonapp.data.basicDiffUtil
 import com.example.pokemonapp.data.inflate
-import com.example.pokemonapp.data.remote.network.Response.Pokemon
+import com.example.pokemonapp.domain.model.PokemonModel
 
-class PokemonListAdapter(private val onClick: (Pokemon) -> Unit) :
-    ListAdapter<Pokemon, ViewHolder>(basicDiffUtil { old, new -> old.name == new.name }) {
+class PokemonListAdapter(private val onClick: (PokemonModel) -> Unit) :
+    ListAdapter<PokemonModel, ViewHolder>(basicDiffUtil { old, new -> old.name == new.name }) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,

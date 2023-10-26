@@ -1,7 +1,7 @@
 package com.example.pokemonapp.ui.pokemondetail
 
 import androidx.lifecycle.SavedStateHandle
-import com.example.pokemonapp.data.di.UrlToSearch
+import com.example.pokemonapp.data.di.NamePokemon
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ class DetailViewModelModule {
 
     @Provides
     @ViewModelScoped
-    @UrlToSearch
+    @NamePokemon
     fun provideUrlToSearch(savedStateHandle: SavedStateHandle) =
-        PokemonDetailArgs.fromSavedStateHandle(savedStateHandle).urlSearch
+        PokemonDetailArgs.fromSavedStateHandle(savedStateHandle).namePokemon
 }

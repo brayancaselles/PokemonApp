@@ -20,7 +20,7 @@
         android:label="pokemon_detail_fragment"
         tools:layout="@layout/pokemon_detail_fragment">
         <argument
-            android:name="urlSearch"
+            android:name="namePokemon"
             app:argType="string" />
     </fragment>
 </navigation>

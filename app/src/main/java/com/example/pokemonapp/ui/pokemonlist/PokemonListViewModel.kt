@@ -14,12 +14,12 @@ import javax.inject.Inject
 @HiltViewModel
 class PokemonListViewModel @Inject constructor(private val requestPokemonListUseCase: RequestPokemonListUseCase) :
     ViewModel() {
-    private val _state = MutableStateFlow(UiState())
-    val state: StateFlow<UiState> = _state.asStateFlow()
+    private val _state = MutableStateFlow(UiStatePokemon())
+    val state: StateFlow<UiStatePokemon> = _state.asStateFlow()
 
     init {
         viewModelScope.launch {
-            _state.value = UiState(isLoading = true)
+            _state.value = UiStatePokemon(isLoading = true)
             val pokemonList = requestPokemonListUseCase()
             _state.update { _state.value.copy(isLoading = false, pokemonList = pokemonList) }
         }
