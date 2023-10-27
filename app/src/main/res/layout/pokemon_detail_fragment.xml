@@ -17,6 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
+        android:textColor="@color/black"
         android:textStyle="bold|italic"
         android:gravity="center|start"
         android:textSize="25sp"
@@ -24,12 +25,12 @@
         tools:text="@tools:sample/lorem" />
 
     <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager"
+        android:id="@+id/view_pager_sprites"
         android:layout_width="0dp"
         android:layout_height="180dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/container_toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_name_pokemon" />
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tab_layout_detail_pokemon"
@@ -37,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:background="@color/primary_color"
-        app:layout_constraintTop_toBottomOf="@+id/view_pager"
+        app:layout_constraintTop_toBottomOf="@+id/view_pager_sprites"
         app:tabGravity="fill"
         app:tabIconTint="#a9a9ac"
         app:tabIndicatorColor="@color/black"

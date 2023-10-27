@@ -1,6 +1,5 @@
 package com.example.pokemonapp.data.repository
 
-import android.util.Log
 import com.example.pokemonapp.data.datasource.ILocalDataSource
 import com.example.pokemonapp.data.datasource.IRemoteDataSource
 import com.example.pokemonapp.data.ifContainsKeyReturnString
@@ -8,6 +7,7 @@ import com.example.pokemonapp.domain.model.AbilityModel
 import com.example.pokemonapp.domain.model.MoveModel
 import com.example.pokemonapp.domain.model.PokemonDetailModel
 import com.example.pokemonapp.domain.model.PokemonModel
+import com.example.pokemonapp.domain.model.SpriteModel
 import com.example.pokemonapp.domain.model.SpritesModel
 import com.example.pokemonapp.domain.model.StatModel
 import com.example.pokemonapp.domain.model.TypeModel
@@ -75,7 +75,7 @@ class Repository @Inject constructor(
     }
 
     private suspend fun parseImagesSprites(spritesJSONObject: JSONObject): SpritesModel {
-        var listImages = arrayListOf<String>()
+        val listImages = arrayListOf<String>()
 
         val backDefault = spritesJSONObject.ifContainsKeyReturnString("back_default")
         listImages.add(backDefault)
@@ -105,25 +105,27 @@ class Repository @Inject constructor(
     }
 
     private suspend fun downloadImages(imagesUrls: List<String>): SpritesModel {
+        val spritesList: ArrayList<SpriteModel> = arrayListOf()
         val imagesBitmap = remoteDataSource.downloadImages(imagesUrls)
+
         if (imagesBitmap.size >= 8) {
-            return SpritesModel(
-                backDefault = imagesBitmap[0],
-                backFemale = imagesBitmap[1],
-                backShiny = imagesBitmap[2],
-                backShinyFemale = imagesBitmap[3],
-                frontDefault = imagesBitmap[4],
-                frontFemale = imagesBitmap[5],
-                frontShiny = imagesBitmap[6],
-                frontShinyFemale = imagesBitmap[7],
-            )
-        } else {
-            throw IllegalArgumentException("Not enough items")
+            imagesBitmap[4]?.let { SpriteModel(it) }?.let { spritesList.add(it) }
+            imagesBitmap[5]?.let { SpriteModel(it) }?.let { spritesList.add(it) }
+
+            for (i in imagesBitmap.indices) {
+                val sprite = imagesBitmap[i]?.let { SpriteModel(it) }
+                if (sprite != null && (i != 4 && i != 5)) {
+                    spritesList.add(sprite)
+                }
+            }
         }
+
+        return SpritesModel(spritesList)
     }
 
     private fun parseTypes(typesJson: JSONArray): List<TypeModel> {
         val typesList: ArrayList<TypeModel> = arrayListOf()
+
         for (i in 0 until typesJson.length()) {
             val typeObject = typesJson.getJSONObject(i).getJSONObject("type")
             val type = TypeModel(typeObject.getString("name") ?: "")
@@ -141,31 +143,31 @@ class Repository @Inject constructor(
             abilitiesList.add(ability)
         }
 
-        Log.d("Abilities", "$abilitiesList")
         return abilitiesList
     }
 
     private fun parseMoves(movesJson: JSONArray): List<MoveModel> {
         val moveList: ArrayList<MoveModel> = arrayListOf()
+
         for (i in 0 until movesJson.length()) {
             val moveObject = movesJson.getJSONObject(i).getJSONObject("move")
             val move = MoveModel(moveObject.getString("name") ?: "")
             moveList.add(move)
         }
 
-        Log.d("Moves", "$moveList")
         return moveList
     }
 
     private fun parseStats(statsJson: JSONArray): List<StatModel> {
         val statsList: ArrayList<StatModel> = arrayListOf()
+
         for (i in 0 until statsJson.length()) {
             val baseStat = statsJson.getJSONObject(i).getString("base_stat")
             val statObject = statsJson.getJSONObject(i).getJSONObject("stat")
             val stat = StatModel(baseStat = baseStat, nameStat = statObject.getString("name") ?: "")
             statsList.add(stat)
         }
-        Log.d("Stats", "$statsList")
+
         return statsList
     }
 }
