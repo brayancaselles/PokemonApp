@@ -64,14 +64,13 @@
         app:layout_constraintTop_toBottomOf="@+id/text_view_title"
         tools:listitem="@layout/item_pokemon" />
 
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/progress_loading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:indeterminate="true"
+    <ViewStub
+        android:id="@+id/view_stub_custom_loading"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:inflatedId="@id/view_stub_custom_loading"
+        android:layout="@layout/custom_loading"
         android:visibility="invisible"
-        app:indicatorColor="@android:color/holo_red_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

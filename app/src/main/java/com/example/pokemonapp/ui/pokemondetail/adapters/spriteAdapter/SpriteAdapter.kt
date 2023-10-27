@@ -1,10 +1,9 @@
-package com.example.pokemonapp.ui.pokemondetail.adapter
+package com.example.pokemonapp.ui.pokemondetail.adapters.spriteAdapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import com.example.pokemonapp.data.basicDiffUtil
-import com.example.pokemonapp.data.inflate
 import com.example.pokemonapp.databinding.ItemSpriteBinding
 import com.example.pokemonapp.domain.model.SpriteModel
 

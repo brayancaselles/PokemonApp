@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
     id("androidx.navigation.safeargs.kotlin")
     id("com.google.dagger.hilt.android")
     id("org.jetbrains.kotlin.kapt")
@@ -50,7 +49,6 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     val navVersion = "2.7.0"
     val hiltVersion = "2.48" // 2.44
-    val roomVersion = "2.5.2" // 2.4.2
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -68,11 +66,6 @@ dependencies {
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
 
-    // DataBase-Room
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    ksp("androidx.room:room-compiler:$roomVersion")
-
     // Recycler view
     implementation("androidx.recyclerview:recyclerview:1.3.1")
 
@@ -84,6 +77,4 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
-    // SplashScreen API android
-    implementation("androidx.core:core-splashscreen:1.0.1")
 }

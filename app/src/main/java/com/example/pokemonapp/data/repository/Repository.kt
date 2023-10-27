@@ -11,6 +11,8 @@ import com.example.pokemonapp.domain.model.SpriteModel
 import com.example.pokemonapp.domain.model.SpritesModel
 import com.example.pokemonapp.domain.model.StatModel
 import com.example.pokemonapp.domain.model.TypeModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import org.json.JSONArray
 import org.json.JSONObject
 import javax.inject.Inject
@@ -22,34 +24,27 @@ class Repository @Inject constructor(
 
     val pokemonList get() = localDataSource.pokemonList
 
-    suspend fun getPokemonListFromApi(): List<PokemonModel>? {
-        return if (localDataSource.isEmpty()) {
-            val pokemonList: ArrayList<PokemonModel> = arrayListOf()
-            val result = remoteDataSource.getPokemonListFromApi()
+    suspend fun getPokemonListFromApi(): Flow<List<PokemonModel>> = flow {
+        val pokemonList: ArrayList<PokemonModel> = arrayListOf()
+        val result = remoteDataSource.getPokemonListFromApi()
 
-            if (result != null) {
-                for (i in 0 until result.length()) {
-                    val jsonObject = result.getJSONObject(i)
-                    val pokemon = PokemonModel(
-                        name = jsonObject.getString("name") ?: "",
-                        url = jsonObject.getString("url") ?: "",
-                    )
-                    pokemonList.add(pokemon)
-                }
+        if (result != null) {
+            for (i in 0 until result.length()) {
+                val jsonObject = result.getJSONObject(i)
+                val pokemon = PokemonModel(
+                    name = jsonObject.getString("name") ?: "",
+                    url = jsonObject.getString("url") ?: "",
+                )
+                pokemonList.add(pokemon)
             }
-            pokemonList.sortedBy { it.name }
-        } else {
-            null
         }
+        emit(pokemonList.sortedBy { it.name })
     }
 
-    suspend fun getDetailPokemonFromApi(namePokemon: String): PokemonDetailModel? {
+    suspend fun getDetailPokemonFromApi(namePokemon: String): Flow<PokemonDetailModel> = flow {
         val result = remoteDataSource.getDetailPokemonFromApi(namePokemon)
-
-        return if (result != null) {
-            getDataDetail(result)
-        } else {
-            null
+        if (result != null) {
+            emit(getDataDetail(result))
         }
     }
 

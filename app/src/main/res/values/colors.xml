@@ -6,4 +6,5 @@
     <color name="base_color">#84EBD4</color>
     <color name="yellow">#ffcd05</color>
     <color name="red">#ff0000</color>
+    <color name="gray">#a9a9ac</color>
 </resources>

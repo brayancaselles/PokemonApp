@@ -1,4 +1,4 @@
-package com.example.pokemonapp.ui.pokemondetail.adapter
+package com.example.pokemonapp.ui.pokemondetail.adapters.spriteAdapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokemonapp.databinding.ItemSpriteBinding

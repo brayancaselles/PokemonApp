@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">PokemonApp</string>
+    <string name="app_name">Pokemon App</string>
     <string name="search_pokemon">Search pokemon</string>
     <string name="available_pokemon">Available pokemons</string>
     <string name="types_pokemon">Types</string>
+    <string name="type_pokemon">Type: </string>
     <string name="abilities_pokemon">Abilities</string>
     <string name="moves_pokemon">Moves</string>
     <string name="stats_pokemon">Stats</string>
+    <string name="snack_bar_try_again_message">Try again</string>
+    <string name="connectivity_error">Looks like you don\'t have internet connection, please try again.</string>
+    <string name="server_error">"Internal server error with code: "</string>
+    <string name="unknown_error">"Unknown error: "</string>
+    <string name="snack_bar_dismiss_message">Dismiss</string>
 </resources>
