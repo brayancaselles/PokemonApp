@@ -5,7 +5,6 @@ import android.graphics.BlendMode
 import android.graphics.BlendModeColorFilter
 import android.graphics.PorterDuff
 import android.graphics.drawable.Drawable
-import android.net.http.HttpException
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View

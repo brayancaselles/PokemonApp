@@ -1,14 +1,12 @@
 package com.example.pokemonapp.data.datasource
 
-import android.graphics.Bitmap
-import org.json.JSONArray
-import org.json.JSONObject
+import com.example.pokemonapp.domain.model.PokemonDetailModel
+import com.example.pokemonapp.domain.model.PokemonModel
+import kotlinx.coroutines.flow.Flow
 
 interface IRemoteDataSource {
 
-    suspend fun getPokemonListFromApi(): JSONArray?
+    fun requestPokemonListFromApi(): Flow<List<PokemonModel>>
 
-    suspend fun getDetailPokemonFromApi(namePokemon: String): JSONObject?
-
-    suspend fun downloadImages(imageUrls: List<String>): List<Bitmap?>
+    fun requestDetailPokemonFromApi(namePokemon: String): Flow<PokemonDetailModel>
 }

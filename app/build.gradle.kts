@@ -39,9 +39,6 @@ android {
     buildFeatures {
         viewBinding = true
     }
-    kotlin {
-        jvmToolchain(8)
-    }
 }
 
 dependencies {
@@ -49,6 +46,7 @@ dependencies {
     implementation("androidx.legacy:legacy-support-v4:1.0.0")
     val navVersion = "2.7.0"
     val hiltVersion = "2.48" // 2.44
+    val coroutinesTestVersion = "1.6.4"
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -77,4 +75,9 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
 
+    // mockito - testing
+    testImplementation("org.mockito.kotlin:mockito-kotlin:4.1.0")
+    testImplementation("org.mockito:mockito-inline:5.2.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutinesTestVersion")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesTestVersion")
 }

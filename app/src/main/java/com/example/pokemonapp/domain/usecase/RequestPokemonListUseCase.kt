@@ -7,7 +7,7 @@ import javax.inject.Inject
 
 class RequestPokemonListUseCase @Inject constructor(private val repository: Repository) {
 
-    suspend operator fun invoke(): Flow<List<PokemonModel>> {
-        return repository.getPokemonListFromApi()
+    operator fun invoke(): Flow<List<PokemonModel>> {
+        return repository.requestPokemonListFromApi()
     }
 }
